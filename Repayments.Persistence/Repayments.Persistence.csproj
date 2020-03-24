@@ -14,5 +14,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="EFCore.Seeder" Version="3.0.0" />
+    <PackageReference Include="CsvHelper" Version="15.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repository\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="ContextExtensions.cs" />
   </ItemGroup>
 </Project>

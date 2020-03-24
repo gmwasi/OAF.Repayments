@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repayments.Persistence;
-using System;
+using Repayments.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
 using Repayments.Core.Interfaces;
 using Repayments.Core.Services;
@@ -38,6 +38,9 @@ namespace Repayments.Web
             ConfigureEntityFramework(services);
 
             services.AddScoped<IRepaymentService, RepaymentService>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<ICustomerSummaryRepository, CustomerSummaryRepository>();
+            services.AddScoped<IRepaymentRepository, RepaymentRepository>();
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
@@ -64,6 +67,12 @@ namespace Repayments.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<RepaymentsContext>();
+                context.Database.Migrate();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

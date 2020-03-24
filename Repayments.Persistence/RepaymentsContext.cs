@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Repayments.Core.Models;
+
 namespace Repayments.Persistence
 {
     public class RepaymentsContext : DbContext
