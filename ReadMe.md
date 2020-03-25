@@ -1,14 +1,11 @@
-﻿#Migrations
+Overview
+Problem Description
+Each season, clients purchase products on credit, and over the course of a season, they repay their credit, and so clients have credit associated with them on a season-by-season basis.
 
-Create a database on mysql
+In our data model, we associate a client’s payments with a season for which they have outstanding credit. These payments are made either through cash to a Field Officer or through a mobile money platform (ex. M-Pesa). A member of our HQ staff then takes a list of payments that clients have made, and uploads them into our application, which saves each payment, and each payment must be associated with the correct client and season in our database.
 
-update your connection info on the app.config
-
-Navigate to the web project folder on cmd/terminal and run
-- dotnet ef database update
-
-To clear the database
-- dotnet ef database -f
-
-To add a migration
-- dotnet ef migrations add <Migration name>
+When a client makes a payment, we need to know which season the payment will be applied to, as sometimes clients can have outstanding credit (debt) in more than one season. Traditionally, we required each payment in a payment upload to be associated with a season, so that the application doesn’t have to figure out to which season(s) the client’s payment needs to be applied to. But to make it easier on clients, Field Officers, and HQ staff, we’re moving away from this model, and dropping the requirement that seasons must be associated with each payment contained in a list of payment uploads. Since we still require that each saved repayment must be associated with a season in our database, this means we need ‘seasonless repayment’ logic to determine which season(s) the client’s payment should be applied to.
+Technical Details
+1. The Cascade - If a client makes a payment that exceeds the outstanding credit (debt) for his/her oldest season, then additional repayment records must be created until all of the client’s remaining payment has been applied to any/all seasons with outstanding credit, from oldest to newest. See the Simple Example section below:
+2. The Overpaid - If a client does NOT have outstanding credit in a later season, or does NOT have outstanding credit in ANY season, then NO additional repayment records are created, and the full amount is applied to the client’s most recent (max) season.
+3. The Override - If a client’s payment specifies a season (i.e. contains a non-zero, non-null SeasonID value), then NO additional repayments are created, and the full amount is applied to the specified season.
