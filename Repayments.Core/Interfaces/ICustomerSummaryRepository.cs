@@ -8,5 +8,6 @@ namespace Repayments.Core.Interfaces
         IEnumerable<CustomerSummary> GetByCustomerId(int customerId);
         IEnumerable<CustomerSummary> GetBySeasonId(int seasonId);
         CustomerSummary GetByCustomerAndSeason(int customerId, int seasonId);
+        IEnumerable<CustomerSummary> Get();
     }
 }

@@ -41,6 +41,7 @@ namespace Repayments.Web
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ICustomerSummaryRepository, CustomerSummaryRepository>();
             services.AddScoped<IRepaymentRepository, RepaymentRepository>();
+            services.AddScoped<ICustomerSummaryService, CustomerSummaryService>();
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory

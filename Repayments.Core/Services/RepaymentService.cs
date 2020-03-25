@@ -67,6 +67,7 @@ namespace Repayments.Core.Services
                     var amountOwed = CheckAmountOwed(upload.CustomerId, customerSummary.SeasonId);
 
                     //create repayment record
+                    upload.SeasonId = customerSummary.SeasonId;
                     var payment = CreateRepaymentRecord(upload, balance, lastParentId);
                     repayments.Add(payment);
                     lastParentId = payment.Id;

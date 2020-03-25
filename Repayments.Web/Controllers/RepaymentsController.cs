@@ -36,7 +36,7 @@ namespace Repayments.Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside CreateOwner action: {ex.Message}");
+                _logger.LogError($"Something went wrong: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }

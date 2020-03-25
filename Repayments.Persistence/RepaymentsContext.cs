@@ -15,5 +15,24 @@ namespace Repayments.Persistence
         public DbSet<Season> Seasons{ get; set; }
         public DbSet<CustomerSummary> CustomerSummaries { get; set; }
         public DbSet<Repayment> Repayments { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //modelBuilder.Entity<CustomerSummary>()
+            //    .HasOne(a => a.Customer)
+            //    .WithMany(b => b.CustomerSummaries);
+
+            //modelBuilder.Entity<CustomerSummary>()
+            //    .HasOne(a => a.Season)
+            //    .WithMany(b => b.CustomerSummaries);
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.CustomerSummaries)
+                .WithOne(e => e.Customer);
+
+            modelBuilder.Entity<Season>()
+                .HasMany(c => c.CustomerSummaries)
+                .WithOne(e => e.Season);
+        }
     }
 }

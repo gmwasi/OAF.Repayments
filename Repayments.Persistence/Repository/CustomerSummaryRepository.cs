@@ -28,5 +28,10 @@ namespace Repayments.Persistence.Repository
         {
             return entities.Where(s => s.SeasonId == seasonId).AsEnumerable();
         }
+
+        public IEnumerable<CustomerSummary> Get()
+        {
+            return context.CustomerSummaries.Include(c => c.Season).Include(c => c.Customer).ToList();
+        }
     }
 }
