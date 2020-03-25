@@ -9,5 +9,6 @@ namespace Repayments.Core.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public virtual ICollection<CustomerSummary> CustomerSummaries { get; set; }
+        public virtual ICollection<Repayment> Repayments { get; set; }
     }
 }

@@ -8,5 +8,7 @@ namespace Repayments.Core.Models
         public string Date { get; set; }
         public decimal Amount { get; set; }
         public int ParentId { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual Season Season { get; set; }
     }
 }

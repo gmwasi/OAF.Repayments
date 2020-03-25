@@ -6,5 +6,6 @@ namespace Repayments.Core.Models
     {
         public string CustomerName { get; set; }
         public virtual ICollection<CustomerSummary> CustomerSummaries { get; set; }
+        public virtual ICollection<Repayment> Repayments { get; set; }
     }
 }

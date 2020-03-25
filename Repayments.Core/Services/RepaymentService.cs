@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Repayments.Core.Models;
+using Repayments.Core.ViewModels;
 using Repayments.Core.Interfaces;
 using System.Collections.Generic;
 
@@ -64,7 +65,7 @@ namespace Repayments.Core.Services
                 foreach(var customerSummary in customerSummaries)
                 {
                     //Check amount owed
-                    var amountOwed = CheckAmountOwed(upload.CustomerId, customerSummary.SeasonId);
+                    var amountOwed = CheckAmountOwed(customerSummary);
 
                     //create repayment record
                     upload.SeasonId = customerSummary.SeasonId;
@@ -108,9 +109,8 @@ namespace Repayments.Core.Services
             return repayments;
         }
 
-        private decimal CheckAmountOwed(int customerId, int seasonId)
+        private decimal CheckAmountOwed(CustomerSummary customerSummary)
         {
-            var customerSummary = _customerSummaryRepository.GetByCustomerAndSeason(customerId, seasonId);
             decimal amountOwed = customerSummary.TotalCredit - customerSummary.TotalRepaid;
             return amountOwed;
         }
@@ -136,6 +136,25 @@ namespace Repayments.Core.Services
             var customerSummary = _customerSummaryRepository.GetByCustomerAndSeason(customerId, seasonId);
             customerSummary.TotalRepaid += amount;
             _customerSummaryRepository.Update(customerSummary);
+        }
+
+        public IEnumerable<RepaymentViewModel> GetAll()
+        {
+            var view = new List<RepaymentViewModel>();
+            var repayments = _repaymentRepository.Get();
+            foreach (var repayment in repayments)
+            {
+                var summary = new RepaymentViewModel
+                {
+                    CustomerName = repayment.Customer.CustomerName,
+                    SeasonName = repayment.Season.SeasonName,
+                    Date = repayment.Date,
+                    Amount = repayment.Amount,
+                };
+                view.Add(summary);
+            }
+
+            return view;
         }
     }
 }

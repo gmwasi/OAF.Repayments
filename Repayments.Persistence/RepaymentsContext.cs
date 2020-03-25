@@ -18,20 +18,20 @@ namespace Repayments.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<CustomerSummary>()
-            //    .HasOne(a => a.Customer)
-            //    .WithMany(b => b.CustomerSummaries);
-
-            //modelBuilder.Entity<CustomerSummary>()
-            //    .HasOne(a => a.Season)
-            //    .WithMany(b => b.CustomerSummaries);
-
             modelBuilder.Entity<Customer>()
                 .HasMany(c => c.CustomerSummaries)
                 .WithOne(e => e.Customer);
 
             modelBuilder.Entity<Season>()
                 .HasMany(c => c.CustomerSummaries)
+                .WithOne(e => e.Season);
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.Repayments)
+                .WithOne(e => e.Customer);
+
+            modelBuilder.Entity<Season>()
+                .HasMany(c => c.Repayments)
                 .WithOne(e => e.Season);
         }
     }

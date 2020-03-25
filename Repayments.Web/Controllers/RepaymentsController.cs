@@ -23,7 +23,16 @@ namespace Repayments.Web.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            return StatusCode(200, "Ok");
+            try
+            {
+                var repayments = _repaymentService.GetAll();
+                return StatusCode(200, repayments);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost]

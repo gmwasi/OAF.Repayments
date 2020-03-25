@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Repayments.Core.Models;
+using Repayments.Core.ViewModels;
 
 namespace Repayments.Core.Interfaces
 {
@@ -8,5 +9,7 @@ namespace Repayments.Core.Interfaces
         IEnumerable<Repayment> submitPayment(RepaymentUpload repaymentUpload);
 
         IEnumerable<Repayment> submitPaymentList(IEnumerable<RepaymentUpload> repaymentUpload);
+
+        IEnumerable<RepaymentViewModel> GetAll();
     }
 }

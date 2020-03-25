@@ -9,12 +9,10 @@ namespace Repayments.Core.Services
     public class CustomerSummaryService : ICustomerSummaryService
     {
         private readonly ICustomerSummaryRepository _customerSummaryRepository;
-        private readonly IRepository<Customer> _customerRepository;
 
-        public CustomerSummaryService(ICustomerSummaryRepository customerSummaryRepository, IRepository<Customer> customerRepository)
+        public CustomerSummaryService(ICustomerSummaryRepository customerSummaryRepository)
         {
             _customerSummaryRepository = customerSummaryRepository;
-            _customerRepository = customerRepository;
         }
 
         public IEnumerable<CustomerSummaryView> GetAll()

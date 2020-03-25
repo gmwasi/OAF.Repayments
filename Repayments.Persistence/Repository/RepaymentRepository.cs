@@ -14,6 +14,11 @@ namespace Repayments.Persistence.Repository
             entities = context.Set<Repayment>();
         }
 
+        public IEnumerable<Repayment> Get()
+        {
+            return context.Repayments.Include(c => c.Season).Include(c => c.Customer).ToList();
+        }
+
         public IEnumerable<Repayment> GetByCustomerId(int customerId)
         {
             return entities.Where(s => s.CustomerId == customerId).AsEnumerable();
